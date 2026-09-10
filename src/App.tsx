@@ -8,6 +8,7 @@ import JobFormPage from "./pages/job-form-page";
 import EmployeesPage from "./pages/employees-page";
 import AssignmentsPage from "./pages/assignments-page";
 import LeaveRequestsPage from "./pages/leave-requests-page";
+import EmployeeFormPage from "./pages/employee-form-page";
 
 function App() {
   return (
@@ -36,6 +37,9 @@ function App() {
 
             <Route path="/staffing" element={<Navigate to="/staffing/employees" replace />} />
             <Route path="/staffing/employees" element={<EmployeesPage />} />
+            <Route path="/staffing/employees/new" element={<EmployeeFormPage />} />
+            <Route path="/staffing/employees/:id/edit" element={<EmployeeFormPage />} />
+
             <Route path="/staffing/assignments" element={<AssignmentsPage />} />
             <Route path="/staffing/leave-requests" element={<LeaveRequestsPage />} />
 
