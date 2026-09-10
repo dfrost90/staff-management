@@ -1,8 +1,11 @@
+import SiteHeader from "@/components/site-header";
+
 const StaffingPage = () => {
   return (
-    <section className="space-y-6">
-      <h1 className="text-2xl font-semibold">Штатна розстановка</h1>
-    </section>
+    <>
+      <SiteHeader title="Штатна розстановка" />
+      <section className="space-y-6"></section>
+    </>
   );
 };
 

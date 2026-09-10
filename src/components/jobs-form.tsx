@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
-import { Spinner } from "./ui/spinner";
 
 type JobsFormProps = {
   jobId?: string;
@@ -108,11 +107,7 @@ const JobsForm = ({ jobId }: JobsFormProps) => {
   }
 
   if (loading) {
-    return (
-      <p role="status">
-        <Spinner /> Завантаження...
-      </p>
-    );
+    return <p role="status">Завантаження...</p>;
   }
 
   if (error) {

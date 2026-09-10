@@ -1,4 +1,3 @@
-import { Spinner } from "@/components/ui/spinner";
 import { useEffect, useState } from "react";
 import {
   Table,
@@ -14,6 +13,7 @@ import { Link } from "react-router";
 import { supabase } from "@/lib/supabase";
 import { TablePagination } from "@/components/table-pagination";
 import DeleteConfirmationDialog from "@/components/delete-confirmation-dialog";
+import SiteHeader from "@/components/site-header";
 
 const PAGE_SIZE = 20;
 
@@ -133,86 +133,90 @@ const JobsPage = () => {
   }
 
   return (
-    <section className="space-y-6">
-      <h1 className="text-2xl font-semibold">Посади</h1>
-      {loading ? (
-        <p role="status">
-          <Spinner /> Завантаження...
-        </p>
-      ) : error ? (
-        <p role="alert" className="text-destructive">
-          {error}
-        </p>
-      ) : jobs.length === 0 ? (
-        <p className="text-muted-foreground">Посад поки немає.</p>
-      ) : (
-        <Table>
-          <TableCaption>Довідник посад підприємства</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead>
-                <Button type="button" variant="ghost" onClick={handleSort}>
-                  Посада
-                  <span>{sortAsc ? "↑" : "↓"}</span>
-                </Button>
-              </TableHead>
-              <TableHead>Дії</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {jobs.map((job) => (
-              <TableRow key={job.job_id}>
-                <TableCell>{job.title}</TableCell>
-                <TableCell className="space-x-2">
-                  <Button
-                    nativeButton={false}
-                    variant="outline"
-                    render={<Link to={`/jobs/${job.job_id}/edit`} />}
-                  >
-                    Редагувати
+    <>
+      <SiteHeader title="Посади" loading={loading}>
+        <Button nativeButton={false} render={<Link to="/jobs/new" />}>
+          Додати посаду
+        </Button>
+      </SiteHeader>
+      <section className="space-y-6">
+        {loading ? (
+          <p role="status">Завантаження...</p>
+        ) : error ? (
+          <p role="alert" className="text-destructive">
+            {error}
+          </p>
+        ) : jobs.length === 0 ? (
+          <p className="text-muted-foreground">Посад поки немає.</p>
+        ) : (
+          <Table>
+            <TableCaption>Довідник посад підприємства</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead>
+                  <Button type="button" variant="ghost" onClick={handleSort}>
+                    Посада
+                    <span>{sortAsc ? "↑" : "↓"}</span>
                   </Button>
-                  <Button
-                    variant="destructive"
-                    onClick={() => {
-                      setDeleteError(null);
-                      setJobToDelete(job);
-                    }}
-                  >
-                    Видалити
-                  </Button>
-                </TableCell>
+                </TableHead>
+                <TableHead>Дії</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      )}
+            </TableHeader>
+            <TableBody>
+              {jobs.map((job) => (
+                <TableRow key={job.job_id}>
+                  <TableCell>{job.title}</TableCell>
+                  <TableCell className="space-x-2">
+                    <Button
+                      nativeButton={false}
+                      variant="outline"
+                      render={<Link to={`/jobs/${job.job_id}/edit`} />}
+                    >
+                      Редагувати
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      onClick={() => {
+                        setDeleteError(null);
+                        setJobToDelete(job);
+                      }}
+                    >
+                      Видалити
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
 
-      {!error && (
-        <TablePagination
-          page={page}
-          pageCount={pageCount}
-          busy={loading || deleting}
-          onPageChange={setPage}
+        {!error && (
+          <TablePagination
+            page={page}
+            pageCount={pageCount}
+            busy={loading || deleting}
+            onPageChange={setPage}
+          />
+        )}
+
+        <Button nativeButton={false} render={<Link to="/jobs/new" />}>
+          Додати посаду
+        </Button>
+
+        <DeleteConfirmationDialog
+          open={jobToDelete !== null}
+          title="Видалити посаду"
+          description={`Посаду "${jobToDelete?.title ?? ""}" буде видалено`}
+          deleting={deleting}
+          error={deleteError}
+          onCancel={() => {
+            setJobToDelete(null);
+            setDeleteError(null);
+          }}
+          onConfirm={handleDelete}
         />
-      )}
-
-      <Button nativeButton={false} render={<Link to="/jobs/new" />}>
-        Додати посаду
-      </Button>
-
-      <DeleteConfirmationDialog
-        open={jobToDelete !== null}
-        title="Видалити посаду"
-        description={`Посаду "${jobToDelete?.title ?? ""}" буде видалено`}
-        deleting={deleting}
-        error={deleteError}
-        onCancel={() => {
-          setJobToDelete(null);
-          setDeleteError(null);
-        }}
-        onConfirm={handleDelete}
-      />
-    </section>
+      </section>
+    </>
   );
 };
 

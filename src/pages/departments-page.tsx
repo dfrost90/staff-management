@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
 import {
   Table,
   TableBody,
@@ -14,6 +13,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { TablePagination } from "@/components/table-pagination";
 import DeleteConfirmationDialog from "@/components/delete-confirmation-dialog";
+import SiteHeader from "@/components/site-header";
 
 const PAGE_SIZE = 20;
 
@@ -150,90 +150,89 @@ const DepartmentsPage = () => {
   }
 
   return (
-    <section className="space-y-6">
-      <h1 className="text-2xl font-semibold">Підрозділи</h1>
-
-      {loading ? (
-        <p role="status">
-          <Spinner /> Завантаження...
-        </p>
-      ) : error ? (
-        <p role="alert" className="text-destructive">
-          {error}
-        </p>
-      ) : departments.length === 0 ? (
-        <p className="text-muted-foreground">Підрозділів поки немає.</p>
-      ) : (
-        <Table>
-          <TableCaption>Довідник підрозділів підприємства</TableCaption>
-          <TableHeader>
-            <TableRow>
-              {columns.map((column) => (
-                <TableHead key={column.key}>
-                  <Button type="button" variant="ghost" onClick={() => handleSort(column.key)}>
-                    {column.label}
-                    {sort.column === column.key && <span>{sort.ascending ? "↑" : "↓"}</span>}
-                  </Button>
-                </TableHead>
-              ))}
-              <TableHead>Дії</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {departments.map((department) => (
-              <TableRow key={department.department_id}>
-                <TableCell>{department.name}</TableCell>
-                <TableCell>{department.short_name}</TableCell>
-                <TableCell className="space-x-2">
-                  <Button
-                    nativeButton={false}
-                    variant="outline"
-                    render={<Link to={`/departments/${department.department_id}/edit`} />}
-                  >
-                    Редагувати
-                  </Button>
-                  <Button
-                    variant="destructive"
-                    onClick={() => {
-                      setDeleteError(null);
-                      setDepartmentToDelete(department);
-                    }}
-                  >
-                    Видалити
-                  </Button>
-                </TableCell>
+    <>
+      <SiteHeader title="Підрозділи" loading={loading}>
+        <Button nativeButton={false} render={<Link to="/departments/new" />}>
+          Додати підрозділ
+        </Button>
+      </SiteHeader>
+      <section className="space-y-6">
+        {loading ? (
+          <p role="status">Завантаження...</p>
+        ) : error ? (
+          <p role="alert" className="text-destructive">
+            {error}
+          </p>
+        ) : departments.length === 0 ? (
+          <p className="text-muted-foreground">Підрозділів поки немає.</p>
+        ) : (
+          <Table>
+            <TableCaption>Довідник підрозділів підприємства</TableCaption>
+            <TableHeader>
+              <TableRow>
+                {columns.map((column) => (
+                  <TableHead key={column.key}>
+                    <Button type="button" variant="ghost" onClick={() => handleSort(column.key)}>
+                      {column.label}
+                      {sort.column === column.key && <span>{sort.ascending ? "↑" : "↓"}</span>}
+                    </Button>
+                  </TableHead>
+                ))}
+                <TableHead>Дії</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      )}
+            </TableHeader>
+            <TableBody>
+              {departments.map((department) => (
+                <TableRow key={department.department_id}>
+                  <TableCell>{department.name}</TableCell>
+                  <TableCell>{department.short_name}</TableCell>
+                  <TableCell className="space-x-2">
+                    <Button
+                      nativeButton={false}
+                      variant="outline"
+                      render={<Link to={`/departments/${department.department_id}/edit`} />}
+                    >
+                      Редагувати
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      onClick={() => {
+                        setDeleteError(null);
+                        setDepartmentToDelete(department);
+                      }}
+                    >
+                      Видалити
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
 
-      {!error && (
-        <TablePagination
-          page={page}
-          pageCount={pageCount}
-          busy={loading || deleting}
-          onPageChange={setPage}
+        {!error && (
+          <TablePagination
+            page={page}
+            pageCount={pageCount}
+            busy={loading || deleting}
+            onPageChange={setPage}
+          />
+        )}
+
+        <DeleteConfirmationDialog
+          open={departmentToDelete !== null}
+          title="Видалити підрозділ"
+          description={`Підрозділ "${departmentToDelete?.name ?? ""}" буде видалено`}
+          deleting={deleting}
+          error={deleteError}
+          onCancel={() => {
+            setDepartmentToDelete(null);
+            setDeleteError(null);
+          }}
+          onConfirm={handleDelete}
         />
-      )}
-
-      <Button nativeButton={false} render={<Link to="/departments/new" />}>
-        Додати підрозділ
-      </Button>
-
-      <DeleteConfirmationDialog
-        open={departmentToDelete !== null}
-        title="Видалити підрозділ"
-        description={`Підрозділ "${departmentToDelete?.name ?? ""}" буде видалено`}
-        deleting={deleting}
-        error={deleteError}
-        onCancel={() => {
-          setDepartmentToDelete(null);
-          setDeleteError(null);
-        }}
-        onConfirm={handleDelete}
-      />
-    </section>
+      </section>
+    </>
   );
 };
 
