@@ -3,9 +3,11 @@ import { AppSidebar } from "./components/app-sidebar";
 import { SidebarInset, SidebarProvider } from "./components/ui/sidebar";
 import DepartmentsPage from "./pages/departments-page";
 import JobsPage from "./pages/jobs-page";
-import StaffingPage from "./pages/staffing-page";
 import DepartmentFormPage from "./pages/department-form-page";
 import JobFormPage from "./pages/job-form-page";
+import EmployeesPage from "./pages/employees-page";
+import AssignmentsPage from "./pages/assignments-page";
+import LeaveRequestsPage from "./pages/leave-requests-page";
 
 function App() {
   return (
@@ -32,7 +34,10 @@ function App() {
             <Route path="/jobs/new" element={<JobFormPage />} />
             <Route path="/jobs/:id/edit" element={<JobFormPage />} />
 
-            <Route path="/staffing" element={<StaffingPage />} />
+            <Route path="/staffing" element={<Navigate to="/staffing/employees" replace />} />
+            <Route path="/staffing/employees" element={<EmployeesPage />} />
+            <Route path="/staffing/assignments" element={<AssignmentsPage />} />
+            <Route path="/staffing/leave-requests" element={<LeaveRequestsPage />} />
 
             <Route path="*" element={<h1>Сторінку не знайдено</h1>} />
           </Routes>

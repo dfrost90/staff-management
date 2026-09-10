@@ -10,13 +10,11 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
 } from "./ui/sidebar";
-
-const navigation = [
-  { title: "Підрозділи", url: "/departments" },
-  { title: "Посади", url: "/jobs" },
-  { title: "Штатна розстановка", url: "/staffing" },
-];
+import { navigation } from "@/lib/navigation";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { pathname } = useLocation();
@@ -41,6 +39,22 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   >
                     {item.title}
                   </SidebarMenuButton>
+                  {item.children && (
+                    <SidebarMenuSub>
+                      {item.children.map((subitem) => (
+                        <SidebarMenuSubItem key={subitem.url}>
+                          <SidebarMenuSubButton
+                            isActive={
+                              pathname === subitem.url || pathname.startsWith(`${subitem.url}/`)
+                            }
+                            render={<NavLink to={subitem.url} />}
+                          >
+                            {subitem.title}
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      ))}
+                    </SidebarMenuSub>
+                  )}
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
