@@ -9,6 +9,8 @@ import EmployeesPage from "./pages/employees-page";
 import AssignmentsPage from "./pages/assignments-page";
 import LeaveRequestsPage from "./pages/leave-requests-page";
 import EmployeeFormPage from "./pages/employee-form-page";
+import AssignmentFormPage from "./pages/assignment-form-page";
+import LeaveRequestFormPage from "./pages/leave-request-form-page";
 
 function App() {
   return (
@@ -41,7 +43,12 @@ function App() {
             <Route path="/staffing/employees/:id/edit" element={<EmployeeFormPage />} />
 
             <Route path="/staffing/assignments" element={<AssignmentsPage />} />
+            <Route path="/staffing/assignments/new" element={<AssignmentFormPage />} />
+            <Route path="/staffing/assignments/:id/edit" element={<AssignmentFormPage />} />
+
             <Route path="/staffing/leave-requests" element={<LeaveRequestsPage />} />
+            <Route path="/staffing/leave-requests/new" element={<LeaveRequestFormPage />} />
+            <Route path="/staffing/leave-requests/:id/edit" element={<LeaveRequestFormPage />} />
 
             <Route path="*" element={<h1>Сторінку не знайдено</h1>} />
           </Routes>

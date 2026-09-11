@@ -119,10 +119,6 @@ const JobsPage = () => {
         return;
       }
 
-      setJobs((current) => {
-        return current.filter((job) => job.job_id !== id);
-      });
-
       setRefreshKey((current) => current + 1);
       setJobToDelete(null);
     } catch {
@@ -198,10 +194,6 @@ const JobsPage = () => {
             onPageChange={setPage}
           />
         )}
-
-        <Button nativeButton={false} render={<Link to="/jobs/new" />}>
-          Додати посаду
-        </Button>
 
         <DeleteConfirmationDialog
           open={jobToDelete !== null}

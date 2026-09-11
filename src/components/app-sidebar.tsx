@@ -15,14 +15,15 @@ import {
   SidebarMenuSubItem,
 } from "./ui/sidebar";
 import { navigation } from "@/lib/navigation";
+import { UserGroup } from "lucide-react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { pathname } = useLocation();
 
   return (
     <Sidebar collapsible="offcanvas" {...props}>
-      <SidebarHeader>
-        <h2 className="font-semibold text-xl">Компанія</h2>
+      <SidebarHeader className="flex justify-center items-center p-8">
+        <UserGroup size={36} />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>

@@ -136,10 +136,6 @@ const DepartmentsPage = () => {
         return;
       }
 
-      setDepartments((current) => {
-        return current.filter((department) => department.department_id !== id);
-      });
-
       setRefreshKey((current) => current + 1);
       setDepartmentToDelete(null);
     } catch {

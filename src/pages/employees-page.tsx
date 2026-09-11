@@ -144,10 +144,6 @@ const EmployeesPage = () => {
         return;
       }
 
-      setEmployees((current) => {
-        return current.filter((employee) => employee.employee_id !== id);
-      });
-
       setRefreshKey((current) => current + 1);
       setEmployeeToDelete(null);
     } catch {
