@@ -229,7 +229,7 @@ const LeaveRequestsForm = ({ leaveId }: LeaveRequestsFormProps) => {
   }
 
   return (
-    <form className="max-w-lg space-y-4" onSubmit={handleSubmit}>
+    <form className="max-w-lg space-y-4" onSubmit={handleSubmit} noValidate>
       {leaveId && (
         <Field>
           <Label htmlFor="leave-id">ID</Label>

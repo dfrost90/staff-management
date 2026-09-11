@@ -116,7 +116,7 @@ const JobsForm = ({ jobId }: JobsFormProps) => {
         <p role="alert" className="text-destructive">
           {error}
         </p>
-        <Link to="/departments">Повернутися до посад</Link>
+        <Link to="/jobs">Повернутися до посад</Link>
       </div>
     );
   }

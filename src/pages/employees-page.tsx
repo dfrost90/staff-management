@@ -227,7 +227,7 @@ const EmployeesPage = () => {
 
         <DeleteConfirmationDialog
           open={employeeToDelete !== null}
-          title="Видалити підрозділ"
+          title="Видалити працівника"
           description={`Працівника "${employeeToDelete?.last_name ?? ""} ${employeeToDelete?.first_name ?? ""}" буде видалено`}
           deleting={deleting}
           error={deleteError}
