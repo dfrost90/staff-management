@@ -23,9 +23,10 @@ type LeaveRequest = {
   assignment: AssignmentLabelData | null;
 };
 
-type SortColumn = "start_date" | "end_date";
+type SortColumn = "employee_last_name" | "start_date" | "end_date";
 
 const columns: { key: SortColumn; label: string }[] = [
+  { key: "employee_last_name", label: "Призначення" },
   { key: "start_date", label: "Початок відпустки" },
   { key: "end_date", label: "Завершення відпустки" },
 ];
@@ -74,7 +75,7 @@ const LeaveRequestsPage = () => {
         const from = page * PAGE_SIZE;
 
         const { data, count, error } = await supabase
-          .from("leave_requests")
+          .from("leave_requests_view")
           .select(
             `
             leave_id, 
@@ -183,9 +184,8 @@ const LeaveRequestsPage = () => {
             <TableCaption>Відпустки</TableCaption>
             <TableHeader>
               <TableRow>
-                <TableHead>Призначення</TableHead>
                 {columns.map((column) => (
-                  <TableHead key={column.key}>
+                  <TableHead key={column.key} className="whitespace-normal">
                     <Button type="button" variant="ghost" onClick={() => handleSort(column.key)}>
                       {column.label}
                       {sort.column === column.key && <span>{sort.ascending ? "↑" : "↓"}</span>}
@@ -198,12 +198,12 @@ const LeaveRequestsPage = () => {
             <TableBody>
               {leaveRequests.map((leaveRequest) => (
                 <TableRow key={leaveRequest.leave_id}>
-                  <TableCell>
+                  <TableCell className="whitespace-normal">
                     {leaveRequest.assignment ? formatAssignment(leaveRequest.assignment) : "-"}
                   </TableCell>
-                  <TableCell>{leaveRequest.start_date}</TableCell>
-                  <TableCell>{leaveRequest.end_date}</TableCell>
-                  <TableCell className="space-x-2">
+                  <TableCell className="whitespace-normal">{leaveRequest.start_date}</TableCell>
+                  <TableCell className="whitespace-normal">{leaveRequest.end_date}</TableCell>
+                  <TableCell className="space-x-2 whitespace-normal">
                     <Button
                       nativeButton={false}
                       variant="outline"

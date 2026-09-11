@@ -187,12 +187,12 @@ const EmployeesPage = () => {
             <TableBody>
               {employees.map((employee) => (
                 <TableRow key={employee.employee_id}>
-                  <TableCell>{employee.last_name}</TableCell>
-                  <TableCell>{employee.first_name}</TableCell>
-                  <TableCell>{employee.patronymic}</TableCell>
-                  <TableCell>{employee.tax_number}</TableCell>
-                  <TableCell>{employee.birth_date}</TableCell>
-                  <TableCell className="space-x-2">
+                  <TableCell className="whitespace-normal">{employee.last_name}</TableCell>
+                  <TableCell className="whitespace-normal">{employee.first_name}</TableCell>
+                  <TableCell className="whitespace-normal">{employee.patronymic}</TableCell>
+                  <TableCell className="whitespace-normal">{employee.tax_number}</TableCell>
+                  <TableCell className="whitespace-normal">{employee.birth_date}</TableCell>
+                  <TableCell className="space-x-2 whitespace-normal">
                     <Button
                       nativeButton={false}
                       variant="outline"

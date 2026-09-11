@@ -180,9 +180,9 @@ const DepartmentsPage = () => {
             <TableBody>
               {departments.map((department) => (
                 <TableRow key={department.department_id}>
-                  <TableCell>{department.name}</TableCell>
-                  <TableCell>{department.short_name}</TableCell>
-                  <TableCell className="space-x-2">
+                  <TableCell className="whitespace-normal">{department.name}</TableCell>
+                  <TableCell className="whitespace-normal">{department.short_name}</TableCell>
+                  <TableCell className="space-x-2 whitespace-normal">
                     <Button
                       nativeButton={false}
                       variant="outline"

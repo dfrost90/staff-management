@@ -216,7 +216,7 @@ const AssignmentsPage = () => {
             <TableHeader>
               <TableRow>
                 {columns.map((column) => (
-                  <TableHead key={column.key}>
+                  <TableHead key={column.key} className="max-w-sm">
                     <Button type="button" variant="ghost" onClick={() => handleSort(column.key)}>
                       {column.label}
                       {sort.column === column.key && <span>{sort.ascending ? "↑" : "↓"}</span>}
@@ -229,7 +229,7 @@ const AssignmentsPage = () => {
             <TableBody>
               {assignments.map((assignment) => (
                 <TableRow key={assignment.assignment_id}>
-                  <TableCell>
+                  <TableCell className="whitespace-normal">
                     {assignment.employee
                       ? [
                           assignment.employee.last_name,
@@ -240,11 +240,15 @@ const AssignmentsPage = () => {
                           .join(" ")
                       : "-"}
                   </TableCell>
-                  <TableCell>{assignment.job?.title ?? "—"}</TableCell>
-                  <TableCell>{assignment.department?.name ?? "—"}</TableCell>
-                  <TableCell>{assignment.start_date}</TableCell>
-                  <TableCell>{assignment.end_date ?? "—"}</TableCell>
-                  <TableCell className="space-x-2">
+                  <TableCell className="whitespace-normal">
+                    {assignment.job?.title ?? "—"}
+                  </TableCell>
+                  <TableCell className="whitespace-normal">
+                    {assignment.department?.name ?? "—"}
+                  </TableCell>
+                  <TableCell className="whitespace-normal">{assignment.start_date}</TableCell>
+                  <TableCell className="whitespace-normal">{assignment.end_date ?? "—"}</TableCell>
+                  <TableCell className="space-x-2 whitespace-normal">
                     <Button
                       nativeButton={false}
                       variant="outline"

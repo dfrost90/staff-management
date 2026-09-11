@@ -161,8 +161,8 @@ const JobsPage = () => {
             <TableBody>
               {jobs.map((job) => (
                 <TableRow key={job.job_id}>
-                  <TableCell>{job.title}</TableCell>
-                  <TableCell className="space-x-2">
+                  <TableCell className="whitespace-normal">{job.title}</TableCell>
+                  <TableCell className="space-x-2 whitespace-normal">
                     <Button
                       nativeButton={false}
                       variant="outline"
